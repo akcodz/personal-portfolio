@@ -99,7 +99,7 @@ const aboutData = [
       <ul className="list-disc space-y-4 text-sm pl-5 ">
         <li>
           <a
-            href="https://github.com/your-username"
+            href="https://github.com/akcodz"
             target="_blank"
             className="hover:text-[#50C878] transition-all duration-300 flex items-center gap-2 cursor-none"
           >
@@ -109,7 +109,7 @@ const aboutData = [
         </li>
         <li>
           <a
-            href="https://linkedin.com/in/your-username"
+            href="https://www.linkedin.com/in/akash-singh-1aa695296/"
             target="_blank"
             className="hover:text-[#50C878] transition-all duration-300 flex items-center gap-2 cursor-none"
           >
@@ -119,7 +119,7 @@ const aboutData = [
         </li>
         <li>
           <a
-            href="mailto:your.email@gmail.com"
+            href="mailto:asus30469@gmail.com"
             className="hover:text-[#50C878] transition-all duration-300 flex items-center gap-2 cursor-none"
           >
             <FaEnvelope className="text-2xl mr-2 " />
@@ -128,7 +128,7 @@ const aboutData = [
         </li>
         <li>
           <a
-            href="https://your-portfolio.vercel.app"
+            href="https://personal-portfolio-pearl-xi-80.vercel.app/"
             target="_blank"
             className="hover:text-[#50C878] transition-all duration-300 flex items-center gap-2 cursor-none"
           >
