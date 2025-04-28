@@ -103,7 +103,7 @@ const Projects = () => {
         "A sleek UI clone of the metaverse game Zentry, featuring smooth scroll animations, dynamic transitions, and an immersive layout built with modern web animation techniques.",
       stack: ["React.js", "GSAP", "ScrollTrigger", "Tailwind CSS"],
       link: "https://zentry-red.vercel.app/",
-      bg: "/zentry.png",
+      bg: "/Zentry.png",
     },
   ];
 
