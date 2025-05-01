@@ -25,6 +25,7 @@ const Navbar = () => {
   const handleScrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
+      setActiveSection(sectionId)
       section.scrollIntoView({ behavior: "smooth" });
     }
   };
@@ -58,7 +59,26 @@ const Navbar = () => {
       });
     }
   }, [show]); // Runs only when `show` becomes `true`
-
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+  
+    navLinks.forEach((link) => {
+      const section = document.getElementById(link.section);
+      if (section) observer.observe(section);
+    });
+  
+    return () => observer.disconnect();
+  }, []);
+  
   return show ? (
     <nav
       ref={navbarRef}
