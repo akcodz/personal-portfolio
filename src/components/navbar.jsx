@@ -17,7 +17,7 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState("");
   const [show, setShow] = useState(false);
   const navbarRef = useRef(null);
   const iconRefs = useRef([]);
@@ -58,7 +58,7 @@ const Navbar = () => {
         ease: "power2.out",
       });
     }
-  }, [show]); // Runs only when `show` becomes `true`
+  }, [show]); 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
