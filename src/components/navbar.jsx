@@ -8,6 +8,7 @@ import {
 import { Home, Folder, Mail, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { Link as ScrollLink,  } from "react-scroll"; // Import react-scroll
 
 const navLinks = [
   { icon: Home, label: "Home", section: "home" },
@@ -17,39 +18,31 @@ const navLinks = [
 ];
 
 const Navbar = () => {
-  const [activeSection, setActiveSection] = useState("");
   const [show, setShow] = useState(false);
   const navbarRef = useRef(null);
   const iconRefs = useRef([]);
-
-  const handleScrollToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      setActiveSection(sectionId)
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   // Delay the navbar display
   useEffect(() => {
     setTimeout(() => setShow(true), 2000);
   }, []);
 
-  // Run animation only when `show` is true
+  // Scroll to the Home section on page load
+  
+
+  // Run GSAP animations
   useEffect(() => {
-    if (!show) return; // Ensure GSAP runs only after the navbar is shown
+    if (!show) return;
 
     const tl = gsap.timeline();
 
-    // Navbar Animation
     tl.from(navbarRef.current, {
       x: -100,
       opacity: 0,
-      duration: .8,
+      duration: 0.8,
       ease: "power3.out",
     });
 
-    // Icons Animation
     if (iconRefs.current.length > 0) {
       tl.from(iconRefs.current, {
         opacity: 0,
@@ -58,27 +51,8 @@ const Navbar = () => {
         ease: "power2.out",
       });
     }
-  }, [show]); 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
-  
-    navLinks.forEach((link) => {
-      const section = document.getElementById(link.section);
-      if (section) observer.observe(section);
-    });
-  
-    return () => observer.disconnect();
-  }, []);
-  
+  }, [show]);
+
   return show ? (
     <nav
       ref={navbarRef}
@@ -88,22 +62,28 @@ const Navbar = () => {
         {navLinks.map((link, index) => (
           <TooltipProvider key={index}>
             <Tooltip>
-              <TooltipTrigger
-                onClick={() => handleScrollToSection(link.section)}
-                className={`flex items-center gap-3 cursor-pointer transition-all duration-300 ease-in-out ${
-                  activeSection === link.section ? "text-[#50C878]" : ""
-                }`}
-              >
-                <span
-                  ref={(el) => (iconRefs.current[index] = el)}
-                  className="cursor-none"
+              <TooltipTrigger className="flex items-center gap-3 cursor-pointer transition-all duration-300 ease-in-out">
+                <ScrollLink
+                  to={link.section}
+                  smooth={true}
+                  duration={500}
+                  spy={true}
+                  activeClass="text-[#50C878]" // Active link styling
+                  offset={-400} // Adjust offset as needed
+                  spyThrottle={600} // Throttle the frequency of active class checking
+                  className="flex items-center gap-3 cursor-pointer transition-all duration-300 ease-in-out"
                 >
-                  <link.icon size={24} />
-                </span>
+                  <span
+                    ref={(el) => (iconRefs.current[index] = el)}
+                    className="cursor-none"
+                  >
+                    <link.icon size={24} />
+                  </span>
+                </ScrollLink>
+                <TooltipContent className="absolute w-24 top-0 left-12 p-2 transition-all duration-300 ease-in-out">
+                  <p className="cursor-none">{link.label}</p>
+                </TooltipContent>
               </TooltipTrigger>
-              <TooltipContent className="absolute w-24 top-0 left-12 p-2 transition-all duration-300 ease-in-out">
-                <p className="cursor-none">{link.label}</p>
-              </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         ))}
